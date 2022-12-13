@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>MVC 게시판</title>
+<!-- 외부 CSS 가져오기 -->
+<link href="css/default.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#replyForm {
 		width: 500px;
@@ -39,10 +41,14 @@
 </style>
 </head>
 <body>
+	<header>
+		<!-- Login, Join 링크 표시 영역 -->
+		<jsp:include page="/inc/top.jsp"></jsp:include>
+	</header>
 	<!-- 게시판 답글 작성 -->
 	<section id="replyForm">
 		<h1>게시판 답글 작성</h1>
-		<form action="BoardModifyPro.bo" name="boardForm" method="post" enctype="multipart/form-data">
+		<form action="BoardReplyPro.bo" name="boardForm" method="post" enctype="multipart/form-data">
 		<!-- 글번호, 페이지번호 -->
 		<input type="hidden" name="board_num" value="${param.board_num }" >
 		<input type="hidden" name="pageNum" value="${param.pageNum }" >
@@ -61,7 +67,9 @@
 				</tr>
 				<tr>
 					<td class="td_left"><label for="board_subject">제목</label></td>
-					<td class="td_right"><input type="text" name="board_subject" value="Re: ${board.board_subject }" required="required"></td>
+					<td class="td_right">
+						<input type="text" name="board_subject" value="Re: ${board.board_subject }" required="required">
+					</td>
 				</tr>
 				<tr>
 					<td class="td_left"><label for="board_content">내용</label></td>

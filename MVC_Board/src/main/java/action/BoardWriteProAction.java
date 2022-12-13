@@ -51,6 +51,7 @@ public class BoardWriteProAction implements Action {
 			// 	  중복 처리된(실제 업로드 되는) 파일명 : getFilesystemName()
 			board.setBoard_file(multi.getOriginalFileName("board_file"));
 			board.setBoard_real_file(multi.getFilesystemName("board_file"));
+
 //			System.out.println(board);
 			
 			// 파라미터명이 다른 복수개의 파일이 전달될 경우 복수개의 파라미터 처리 방법

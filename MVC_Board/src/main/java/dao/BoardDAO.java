@@ -164,7 +164,6 @@ public class BoardDAO {
 			JdbcUtil.close(pstmt);
 		}
 		
-		
 		return boardList;
 	}
 	
@@ -360,7 +359,7 @@ public class BoardDAO {
 	
 	// 답글 쓰기
 	public int insertReplyBoard(BoardBean board) {
-		
+ 		
 		// INSERT 작업 결과를 리턴받아 저장할 변수 선언
 		int insertCount = 0;
 		
@@ -385,9 +384,48 @@ public class BoardDAO {
 				// rs.getInt(1) -> MAX(idx) 컬럼의 조회 결과 중 첫번째 행
 			}
 			                                                                          
-			System.out.println("새 글 번호 : " + board_num);
-			// ------------------------------------------------------------------------------
+//			System.out.println("새 답글 번호 : " + board_num);
+			// -----------------------------------------------------------------------------
 			
+			// 최초원본글의 들여쓰기레벨과 순서번호는 0
+			int ref = board.getBoard_re_ref(); // 원본글의 참조글번호
+			int lev = board.getBoard_re_lev(); // 원본글의 들여쓰기레벨
+			int seq = board.getBoard_re_seq(); // 원본글의 순서번호
+			
+			// 기존 답글들에 대한 순서번호 증가 = UPDATE 구문
+			// => 원본글들의 참조글번호(board_re_ref)와 같고 
+			///	  원본글들의 순서번호(board_re_seq) 보다 큰 레코드들의 순서번호를 + 1씩 증가시키기
+			sql = "UPDATE board SET board_re_seq = board_re_seq+1 WHERE board_re_ref = ? AND board_re_seq > ?";
+			pstmt2 = con.prepareStatement(sql);
+			pstmt2.setInt(1, ref); 
+			pstmt2.setInt(2, seq);
+			
+			pstmt2.executeUpdate();
+			
+			JdbcUtil.close(pstmt2); // 사용완료 된 자원 반환
+			
+			// 새 답글에 사용될 lev, seq값 +1 처리
+			lev++;
+			seq++;
+			
+			// ----------------------------------------------------------------------------
+			// 전달받은 데이터(BoardBean 객체)를 사용하여 INSERT 작업 수행
+			// => 참조글번호(board_re_ref)는 새 글 번호와 동일한 번호로 지정
+			sql = "INSERT INTO board VALUES (?,?,?,?,?,?,?,?,?,?,0,now())";
+			pstmt2 = con.prepareStatement(sql);
+			pstmt2.setInt(1, board_num); // 글번호
+			pstmt2.setString(2, board.getBoard_name()); 
+			pstmt2.setString(3, board.getBoard_pass());
+			pstmt2.setString(4, board.getBoard_subject());
+			pstmt2.setString(5, board.getBoard_content());
+			pstmt2.setString(6, board.getBoard_file()); // 원본파일명
+			pstmt2.setString(7, board.getBoard_real_file()); // 실제파일명
+			pstmt2.setInt(8, ref); // 참조글번호
+			// => 답글의 참조글번호는 원본글의 글번호로 고정되어야함
+			pstmt2.setInt(9, lev); // 들여쓰기레벨
+			pstmt2.setInt(10, seq); // 순서번호
+			
+			insertCount = pstmt2.executeUpdate();
 			
 		} catch (SQLException e) {
 			System.out.println("SQL 구문 오류! - insertBoard()");

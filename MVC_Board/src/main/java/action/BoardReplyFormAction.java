@@ -15,6 +15,7 @@ public class BoardReplyFormAction implements Action {
 		
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
 		
+		// 게시물 내용 조회
 		BoardDetailService service = new BoardDetailService();
 		BoardBean board = service.getBoard(board_num, false);
 		

@@ -11,7 +11,7 @@ public class BoardReplyProService {
 	// registBoard() 메서드를 호출하여 글쓰기 작업 요청
 	// => 파라미터 : BoardBean 객체   리턴타입 : boolean(isWriteSuccess)
 	public boolean registBoard(BoardBean board) {
-		System.out.println("BoardWriteProService - registBoard()");
+		System.out.println("BoardReplyProService - registBoard()");
 		
 		// 1. 글쓰기 작업 요청 처리 결과를 저장할 boolean 타입 변수 선언
 		boolean isWriteSuccess = false;

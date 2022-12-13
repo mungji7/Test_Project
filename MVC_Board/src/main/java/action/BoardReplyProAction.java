@@ -19,6 +19,7 @@ public class BoardReplyProAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("BoardReplyProAction");
 		
 		ActionForward forward = null;
 		
@@ -33,6 +34,7 @@ public class BoardReplyProAction implements Action {
 		
 			// 전달받을 파라미터 데이터를 BoardBean 클래스 인스턴스 생성 후 저장
 			BoardBean board = new BoardBean();
+			board.setBoard_num(Integer.parseInt(multi.getParameter("board_num")));
 			board.setBoard_name(multi.getParameter("board_name"));
 			board.setBoard_pass(multi.getParameter("board_pass"));
 			board.setBoard_subject(multi.getParameter("board_subject"));
@@ -43,13 +45,17 @@ public class BoardReplyProAction implements Action {
 			// 	  중복 처리된(실제 업로드 되는) 파일명 : getFilesystemName()
 			board.setBoard_file(multi.getOriginalFileName("board_file"));
 			board.setBoard_real_file(multi.getFilesystemName("board_file"));
-//			System.out.println(board);
+			
+			board.setBoard_re_ref(Integer.parseInt(multi.getParameter("board_re_ref")));
+			board.setBoard_re_lev(Integer.parseInt(multi.getParameter("board_re_lev")));
+			board.setBoard_re_seq(Integer.parseInt(multi.getParameter("board_re_seq")));
 			
 			// 만약, 파일명이 null 일 경우 널스트링으로 교체(답글은 파일 업로드가 선택사항)
 			if(board.getBoard_file() == null) {
 				board.setBoard_file("");
 				board.setBoard_real_file("");
 			}
+//			System.out.println(board);
 			
 			// 파라미터명이 다른 복수개의 파일이 전달될 경우 복수개의 파라미터 처리 방법
 			// 1) 파일에 대한 파라미터명을 관리하는 객체를 통해 파일명 목록 가져오기(반복)

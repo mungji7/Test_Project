@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>MVC 게시판</title>
+<!-- 외부 CSS 가져오기 -->
+<link href="css/default.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	#listForm {
 		width: 1024px;
@@ -63,6 +65,10 @@
 </style>
 </head>
 <body>
+	<header>
+		<!-- Login, Join 링크 표시 영역 -->
+		<jsp:include page="/inc/top.jsp"></jsp:include>
+	</header>
 	<!-- 게시판 리스트 -->
 	<section id="listForm">
 	<h2>게시판 글 목록</h2>
@@ -90,6 +96,15 @@
 					</c:otherwise>
 				</c:choose>
 				<td id="subject">
+					<%-- =========== 답글 관련 처리 ========== --%>
+					<%-- board_re_lev 값이 0보다 크면 답글이므로 들여쓰기 후 이미지 추가 --%>
+					<c:if test="${board.board_re_lev > 0}">
+						<c:forEach var="i" begin="1" end="${board.board_re_lev }">
+							&nbsp;&nbsp;
+						</c:forEach>
+						<%-- 답글 제목 앞에 이미지 추가 --%>
+						<img src="images/re.gif">					
+					</c:if>
 					<a href="BoardDetail.bo?board_num=${board.board_num}&pageNum=${pageNum}">${board.board_subject }</a>
 				</td>
 				<td>${board.board_name }</td>

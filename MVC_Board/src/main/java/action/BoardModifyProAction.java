@@ -63,7 +63,7 @@ public class BoardModifyProAction implements Action {
 			// => 따라서 null 값이 저장하는게 아닌 기존 파일을 유지해야함
 			
 			
-			// BoardModifyProService - isBoardWriter() 호출하여 글 수정 작업 요청
+			// BoardModifyProService - isBoardWriter() 호출하여 패스워드 일치 여부 확인
 			// => 파라미터 : BoardBean 객체   리턴타입 : boolean(isBoardWriter)
 			BoardModifyProService service = new BoardModifyProService();
 			boolean isboardwriter = service.isBoardWriter(board);

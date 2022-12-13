@@ -11,7 +11,7 @@
 	#writeForm {
 		width: 500px;
 		height: 450px;
-		border: 1px solid red;
+		border: 1px solid purple;
 		margin: auto;
 	}
 	
@@ -26,13 +26,13 @@
 	
 	.td_left {
 		width: 150px;
-		background: orange;
+		background: #A9A9F5;
 		text-align: center;
 	}
 	
 	.td_right {
 		width: 300px;
-		background: skyblue;
+		background: #E6E0F8;
 	}
 	
 	#commandCell {

@@ -36,8 +36,8 @@ CREATE TABLE member (
 
 SELECT * FROM member;
 
-/* 암호화 패스워드 관리를 위해 passwd 컬럼 타입을 VARCHAR(50)으로 변경 */
-ALTER TABLE member CHANGE passwd passwd VARCHAR(50) NOT NULL;
+/* 암호화 패스워드 관리를 위해 passwd 컬럼 타입을 VARCHAR(100)으로 변경 */
+ALTER TABLE member CHANGE passwd passwd VARCHAR(100) NOT NULL;
 
 DESC member;
 

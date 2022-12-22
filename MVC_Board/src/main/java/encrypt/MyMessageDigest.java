@@ -40,10 +40,14 @@ public class MyMessageDigest {
 			System.out.println(Arrays.toString(digestResult));
 			
 			// for문을 사용하여 암호문 배열 크기만큼 반복
-			for(int i=0;i<=digestResult.length;i++) {
+			for(int i=0;i<digestResult.length;i++) {
+				// int 타입 기준 음수데이터 -> 양수로 변환(byte 타입을 정수와 16진수 FF를 & 연산) => byte 타입을 양수로
+				// => 결과값을 16진수 문자열 대문자로 변환하여 문자열 결합
+				strCipherText += Integer.toHexString(digestResult[i] & 0xFF).toUpperCase();
 				
 			}
 			
+			System.out.println(strCipherText);
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println(hashAlgorithm + "알고리즘이 존재하지 않습니다!");
 			e.printStackTrace();

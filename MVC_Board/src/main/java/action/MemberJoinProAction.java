@@ -28,7 +28,7 @@ public class MemberJoinProAction implements Action {
 			// email1, email2 두 개의 파라미터가 전달되므로 결합 필요
 			member.setEmail(request.getParameter("email1")+ "@" + request.getParameter("email2"));
 			member.setGender(request.getParameter("gender"));
-			member.setPasswd(request.getParameter("passwd"));
+//			member.setPasswd(request.getParameter("passwd"));
 //			System.out.println(member);
 			
 			// ------------------------------------------------------
@@ -36,7 +36,8 @@ public class MemberJoinProAction implements Action {
 			// encrypt.MyMessageDigest 클래스 인스턴스 생성
 			MyMessageDigest md = new MyMessageDigest("SHA-256");
 			// MyMessageDigest 객체의 hasing() 메서드를 호출하여 암호화 수행
-			md.hashing(request.getParameter("passwd"));
+			// => 리턴되는 암호문(해싱된 패스워드)를 MemberBean 객체에 저장
+			member.setPasswd(md.hashing(request.getParameter("passwd")));
 			// ------------------------------------------------------
 			
 			MemberJoinProService service = new MemberJoinProService();

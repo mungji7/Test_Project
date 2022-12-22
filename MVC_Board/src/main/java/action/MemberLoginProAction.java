@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.mysql.cj.Session;
 
+import encrypt.MyMessageDigest;
 import svc.MemberLoginProService;
 import vo.ActionForward;
 import vo.MemberBean;
@@ -19,11 +20,19 @@ public class MemberLoginProAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
 		
-		MemberBean member = new MemberBean();
-		member.setId(request.getParameter("id"));
-		member.setPasswd(request.getParameter("passwd"));
 		
 		try {
+			MemberBean member = new MemberBean();
+			member.setId(request.getParameter("id"));
+//			member.setPasswd(request.getParameter("passwd"));
+			
+			// ------------------------------------------------------
+			// 패스워드 암호화(해싱) 기능 추가
+			// => 로그인 시 입력받은 패스워드를 해싱을 통해 암호화를 수행하고
+			//    암호화 된 패스워드끼리 비교 수행해야함
+			MyMessageDigest md = new MyMessageDigest("SHA-256");
+			member.setPasswd(md.hashing(request.getParameter("passwd")));
+			// ------------------------------------------------------
 			
 			// MemberLoginProService - loginMember()
 			// => 파라미터 : MemberBean 객체   리턴타입 : int(loginResult)
